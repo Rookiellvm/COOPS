@@ -1,0 +1,508 @@
+; ModuleID = 'Debug\AllBCfile.bc'
+source_filename = "llvm-link"
+target datalayout = "e-m:x-p:32:32-i64:64-f80:32-n8:16:32-a:0:32-S32"
+target triple = "i686-pc-windows-msvc16.0.0"
+
+$"??_C@_0DP@EFDPGBGM@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdef@" = comdat any
+
+$"??_C@_0ED@MCBCPBCB@?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DNStart?5encrypting?5cip@" = comdat any
+
+$"??_C@_02HAOIJKIC@?$CFc?$AA@" = comdat any
+
+$"??_C@_0GP@EOOLEAEI@?6?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DNEncryption?5complete@" = comdat any
+
+$"??_C@_0CP@KFLJDBCD@?6?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DNDecryption?5Complete@" = comdat any
+
+$"??_C@_01EEMJAFIK@?6?$AA@" = comdat any
+
+$"??_C@_0BH@LENNACFI@result?$DN?$CFld?0time?$DN?$CFlf?5s?6?$AA@" = comdat any
+
+@"?S@@3PAHA" = dso_local global [256 x i32] zeroinitializer, align 4
+@"?T@@3PADA" = dso_local global [256 x i8] zeroinitializer, align 1
+@"?Key@@3PAHA" = dso_local global [256 x i32] zeroinitializer, align 4
+@"?KeyStream@@3PAHA" = dso_local global [65534 x i32] zeroinitializer, align 4
+@"?PlainText@@3PADA" = dso_local global [65534 x i8] zeroinitializer, align 1
+@"?CryptoText@@3PADA" = dso_local global [65534 x i8] zeroinitializer, align 1
+@"?WordList@@3PBDB" = dso_local global i8* getelementptr inbounds ([63 x i8], [63 x i8]* @"??_C@_0DP@EFDPGBGM@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdef@", i32 0, i32 0), align 4
+@"??_C@_0DP@EFDPGBGM@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdef@" = linkonce_odr dso_local unnamed_addr constant [63 x i8] c"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\00", comdat, align 1
+@"??_C@_0ED@MCBCPBCB@?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DNStart?5encrypting?5cip@" = linkonce_odr dso_local unnamed_addr constant [67 x i8] c"============Start encrypting ciphertext============:\0A ciphertext\A3\BA\00", comdat, align 1
+@"??_C@_02HAOIJKIC@?$CFc?$AA@" = linkonce_odr dso_local unnamed_addr constant [3 x i8] c"%c\00", comdat, align 1
+@"??_C@_0GP@EOOLEAEI@?6?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DNEncryption?5complete@" = linkonce_odr dso_local unnamed_addr constant [111 x i8] c"\0A============Encryption completed============\0A============Start Decrypting ciphertext============\0A plaintext\A3\BA\00", comdat, align 1
+@"??_C@_0CP@KFLJDBCD@?6?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DNDecryption?5Complete@" = linkonce_odr dso_local unnamed_addr constant [47 x i8] c"\0A============Decryption Completed============\0A\00", comdat, align 1
+@"??_C@_01EEMJAFIK@?6?$AA@" = linkonce_odr dso_local unnamed_addr constant [2 x i8] c"\0A\00", comdat, align 1
+@__const.main.text = private unnamed_addr constant [27 x i8] c"ASDFGHJKLQWERTYUIOPZXCVBNM\00", align 1
+@"??_C@_0BH@LENNACFI@result?$DN?$CFld?0time?$DN?$CFlf?5s?6?$AA@" = linkonce_odr dso_local unnamed_addr constant [23 x i8] c"result=%ld,time=%lf s\0A\00", comdat, align 1
+
+; Function Attrs: noinline nounwind optnone sspstrong
+define dso_local void @"?init_S@@YAXXZ"() #0 {
+entry:
+  %i = alloca i32, align 4
+  store i32 0, i32* %i, align 4
+  br label %for.cond
+
+for.cond:                                         ; preds = %for.inc, %entry
+  %0 = load i32, i32* %i, align 4
+  %cmp = icmp slt i32 %0, 256
+  br i1 %cmp, label %for.body, label %for.end
+
+for.body:                                         ; preds = %for.cond
+  %1 = load i32, i32* %i, align 4
+  %2 = load i32, i32* %i, align 4
+  %arrayidx = getelementptr inbounds [256 x i32], [256 x i32]* @"?S@@3PAHA", i32 0, i32 %2
+  store i32 %1, i32* %arrayidx, align 4
+  br label %for.inc
+
+for.inc:                                          ; preds = %for.body
+  %3 = load i32, i32* %i, align 4
+  %inc = add nsw i32 %3, 1
+  store i32 %inc, i32* %i, align 4
+  br label %for.cond
+
+for.end:                                          ; preds = %for.cond
+  ret void
+}
+
+; Function Attrs: noinline optnone sspstrong
+define dso_local void @"?init_Key@@YAXXZ"() #1 {
+entry:
+  %index = alloca i32, align 4
+  %keylen = alloca i32, align 4
+  %i = alloca i32, align 4
+  %d = alloca i32, align 4
+  %i11 = alloca i32, align 4
+  %call = call i64 @"?time@@YA_JPA_J@Z"(i64* null)
+  %conv = trunc i64 %call to i32
+  call void @srand(i32 %conv) #5
+  %call1 = call i32 @rand() #5
+  %conv2 = sitofp i32 %call1 to double
+  %div = fdiv double %conv2, 3.276700e+04
+  %mul = fmul double %div, 2.560000e+02
+  %conv3 = fptosi double %mul to i32
+  store i32 %conv3, i32* %keylen, align 4
+  store i32 0, i32* %i, align 4
+  br label %for.cond
+
+for.cond:                                         ; preds = %for.inc, %entry
+  %0 = load i32, i32* %i, align 4
+  %1 = load i32, i32* %keylen, align 4
+  %cmp = icmp slt i32 %0, %1
+  br i1 %cmp, label %for.body, label %for.end
+
+for.body:                                         ; preds = %for.cond
+  %call4 = call i32 @rand() #5
+  %conv5 = sitofp i32 %call4 to double
+  %div6 = fdiv double %conv5, 3.276700e+04
+  %mul7 = fmul double %div6, 6.300000e+01
+  %conv8 = fptosi double %mul7 to i32
+  store i32 %conv8, i32* %index, align 4
+  %2 = load i8*, i8** @"?WordList@@3PBDB", align 4
+  %3 = load i32, i32* %index, align 4
+  %arrayidx = getelementptr inbounds i8, i8* %2, i32 %3
+  %4 = load i8, i8* %arrayidx, align 1
+  %conv9 = sext i8 %4 to i32
+  %5 = load i32, i32* %i, align 4
+  %arrayidx10 = getelementptr inbounds [256 x i32], [256 x i32]* @"?Key@@3PAHA", i32 0, i32 %5
+  store i32 %conv9, i32* %arrayidx10, align 4
+  br label %for.inc
+
+for.inc:                                          ; preds = %for.body
+  %6 = load i32, i32* %i, align 4
+  %inc = add nsw i32 %6, 1
+  store i32 %inc, i32* %i, align 4
+  br label %for.cond
+
+for.end:                                          ; preds = %for.cond
+  store i32 0, i32* %i11, align 4
+  br label %for.cond12
+
+for.cond12:                                       ; preds = %for.inc18, %for.end
+  %7 = load i32, i32* %i11, align 4
+  %cmp13 = icmp slt i32 %7, 256
+  br i1 %cmp13, label %for.body14, label %for.end20
+
+for.body14:                                       ; preds = %for.cond12
+  %8 = load i32, i32* %i11, align 4
+  %9 = load i32, i32* %keylen, align 4
+  %rem = srem i32 %8, %9
+  %arrayidx15 = getelementptr inbounds [256 x i32], [256 x i32]* @"?Key@@3PAHA", i32 0, i32 %rem
+  %10 = load i32, i32* %arrayidx15, align 4
+  %conv16 = trunc i32 %10 to i8
+  %11 = load i32, i32* %i11, align 4
+  %arrayidx17 = getelementptr inbounds [256 x i8], [256 x i8]* @"?T@@3PADA", i32 0, i32 %11
+  store i8 %conv16, i8* %arrayidx17, align 1
+  br label %for.inc18
+
+for.inc18:                                        ; preds = %for.body14
+  %12 = load i32, i32* %i11, align 4
+  %inc19 = add nsw i32 %12, 1
+  store i32 %inc19, i32* %i11, align 4
+  br label %for.cond12
+
+for.end20:                                        ; preds = %for.cond12
+  ret void
+}
+
+; Function Attrs: noinline nounwind optnone sspstrong
+define internal i64 @"?time@@YA_JPA_J@Z"(i64* %_Time) #0 {
+entry:
+  %_Time.addr = alloca i64*, align 4
+  store i64* %_Time, i64** %_Time.addr, align 4
+  %0 = load i64*, i64** %_Time.addr, align 4
+  %call = call i64 @_time64(i64* %0) #5
+  ret i64 %call
+}
+
+; Function Attrs: nounwind
+declare dllimport void @srand(i32) #2
+
+; Function Attrs: nounwind
+declare dllimport i32 @rand() #2
+
+; Function Attrs: nounwind
+declare dllimport i64 @_time64(i64*) #2
+
+; Function Attrs: noinline nounwind optnone sspstrong
+define dso_local void @"?permute_S@@YAXXZ"() #0 {
+entry:
+  %temp = alloca i32, align 4
+  %j = alloca i32, align 4
+  %i = alloca i32, align 4
+  store i32 0, i32* %j, align 4
+  store i32 0, i32* %i, align 4
+  br label %for.cond
+
+for.cond:                                         ; preds = %for.inc, %entry
+  %0 = load i32, i32* %i, align 4
+  %cmp = icmp slt i32 %0, 256
+  br i1 %cmp, label %for.body, label %for.end
+
+for.body:                                         ; preds = %for.cond
+  %1 = load i32, i32* %j, align 4
+  %2 = load i32, i32* %i, align 4
+  %arrayidx = getelementptr inbounds [256 x i32], [256 x i32]* @"?S@@3PAHA", i32 0, i32 %2
+  %3 = load i32, i32* %arrayidx, align 4
+  %add = add nsw i32 %1, %3
+  %4 = load i32, i32* %i, align 4
+  %arrayidx1 = getelementptr inbounds [256 x i8], [256 x i8]* @"?T@@3PADA", i32 0, i32 %4
+  %5 = load i8, i8* %arrayidx1, align 1
+  %conv = sext i8 %5 to i32
+  %add2 = add nsw i32 %add, %conv
+  %rem = srem i32 %add2, 256
+  store i32 %rem, i32* %j, align 4
+  %6 = load i32, i32* %i, align 4
+  %arrayidx3 = getelementptr inbounds [256 x i32], [256 x i32]* @"?S@@3PAHA", i32 0, i32 %6
+  %7 = load i32, i32* %arrayidx3, align 4
+  store i32 %7, i32* %temp, align 4
+  %8 = load i32, i32* %j, align 4
+  %arrayidx4 = getelementptr inbounds [256 x i32], [256 x i32]* @"?S@@3PAHA", i32 0, i32 %8
+  %9 = load i32, i32* %arrayidx4, align 4
+  %10 = load i32, i32* %i, align 4
+  %arrayidx5 = getelementptr inbounds [256 x i32], [256 x i32]* @"?S@@3PAHA", i32 0, i32 %10
+  store i32 %9, i32* %arrayidx5, align 4
+  %11 = load i32, i32* %temp, align 4
+  %12 = load i32, i32* %j, align 4
+  %arrayidx6 = getelementptr inbounds [256 x i32], [256 x i32]* @"?S@@3PAHA", i32 0, i32 %12
+  store i32 %11, i32* %arrayidx6, align 4
+  br label %for.inc
+
+for.inc:                                          ; preds = %for.body
+  %13 = load i32, i32* %i, align 4
+  %inc = add nsw i32 %13, 1
+  store i32 %inc, i32* %i, align 4
+  br label %for.cond
+
+for.end:                                          ; preds = %for.cond
+  ret void
+}
+
+; Function Attrs: noinline nounwind optnone sspstrong
+define dso_local void @"?create_key_stream@@YAXPADH@Z"(i8* %text, i32 %textLength) #0 {
+entry:
+  %textLength.addr = alloca i32, align 4
+  %text.addr = alloca i8*, align 4
+  %i = alloca i32, align 4
+  %j = alloca i32, align 4
+  %temp = alloca i32, align 4
+  %t = alloca i32, align 4
+  %k = alloca i32, align 4
+  %index = alloca i32, align 4
+  store i32 %textLength, i32* %textLength.addr, align 4
+  store i8* %text, i8** %text.addr, align 4
+  store i32 0, i32* %index, align 4
+  store i32 0, i32* %j, align 4
+  store i32 0, i32* %i, align 4
+  br label %while.cond
+
+while.cond:                                       ; preds = %while.body, %entry
+  %0 = load i32, i32* %textLength.addr, align 4
+  %dec = add nsw i32 %0, -1
+  store i32 %dec, i32* %textLength.addr, align 4
+  %tobool = icmp ne i32 %0, 0
+  br i1 %tobool, label %while.body, label %while.end
+
+while.body:                                       ; preds = %while.cond
+  %1 = load i32, i32* %i, align 4
+  %add = add nsw i32 %1, 1
+  %rem = srem i32 %add, 256
+  store i32 %rem, i32* %i, align 4
+  %2 = load i32, i32* %j, align 4
+  %3 = load i32, i32* %i, align 4
+  %arrayidx = getelementptr inbounds [256 x i32], [256 x i32]* @"?S@@3PAHA", i32 0, i32 %3
+  %4 = load i32, i32* %arrayidx, align 4
+  %add1 = add nsw i32 %2, %4
+  %rem2 = srem i32 %add1, 256
+  store i32 %rem2, i32* %j, align 4
+  %5 = load i32, i32* %i, align 4
+  %arrayidx3 = getelementptr inbounds [256 x i32], [256 x i32]* @"?S@@3PAHA", i32 0, i32 %5
+  %6 = load i32, i32* %arrayidx3, align 4
+  store i32 %6, i32* %temp, align 4
+  %7 = load i32, i32* %j, align 4
+  %arrayidx4 = getelementptr inbounds [256 x i32], [256 x i32]* @"?S@@3PAHA", i32 0, i32 %7
+  %8 = load i32, i32* %arrayidx4, align 4
+  %9 = load i32, i32* %i, align 4
+  %arrayidx5 = getelementptr inbounds [256 x i32], [256 x i32]* @"?S@@3PAHA", i32 0, i32 %9
+  store i32 %8, i32* %arrayidx5, align 4
+  %10 = load i32, i32* %temp, align 4
+  %11 = load i32, i32* %j, align 4
+  %arrayidx6 = getelementptr inbounds [256 x i32], [256 x i32]* @"?S@@3PAHA", i32 0, i32 %11
+  store i32 %10, i32* %arrayidx6, align 4
+  %12 = load i32, i32* %i, align 4
+  %arrayidx7 = getelementptr inbounds [256 x i32], [256 x i32]* @"?S@@3PAHA", i32 0, i32 %12
+  %13 = load i32, i32* %arrayidx7, align 4
+  %14 = load i32, i32* %j, align 4
+  %arrayidx8 = getelementptr inbounds [256 x i32], [256 x i32]* @"?S@@3PAHA", i32 0, i32 %14
+  %15 = load i32, i32* %arrayidx8, align 4
+  %add9 = add nsw i32 %13, %15
+  %rem10 = srem i32 %add9, 256
+  store i32 %rem10, i32* %t, align 4
+  %16 = load i32, i32* %t, align 4
+  %arrayidx11 = getelementptr inbounds [256 x i32], [256 x i32]* @"?S@@3PAHA", i32 0, i32 %16
+  %17 = load i32, i32* %arrayidx11, align 4
+  %18 = load i32, i32* %index, align 4
+  %arrayidx12 = getelementptr inbounds [65534 x i32], [65534 x i32]* @"?KeyStream@@3PAHA", i32 0, i32 %18
+  store i32 %17, i32* %arrayidx12, align 4
+  %19 = load i32, i32* %index, align 4
+  %inc = add nsw i32 %19, 1
+  store i32 %inc, i32* %index, align 4
+  br label %while.cond
+
+while.end:                                        ; preds = %while.cond
+  ret void
+}
+
+; Function Attrs: noinline optnone sspstrong
+define dso_local void @"?Encrypt@@YAXPAD@Z"(i8* %text) #1 {
+entry:
+  %text.addr = alloca i8*, align 4
+  %textLength = alloca i32, align 4
+  %plain_word = alloca i32, align 4
+  %i = alloca i32, align 4
+  %i5 = alloca i32, align 4
+  %i16 = alloca i32, align 4
+  %i29 = alloca i32, align 4
+  store i8* %text, i8** %text.addr, align 4
+  %0 = load i8*, i8** %text.addr, align 4
+  %call = call i32 @strlen(i8* %0) #5
+  store i32 %call, i32* %textLength, align 4
+  call void @"?init_S@@YAXXZ"()
+  call void @"?init_Key@@YAXXZ"()
+  call void @"?permute_S@@YAXXZ"()
+  %1 = load i32, i32* %textLength, align 4
+  %2 = load i8*, i8** %text.addr, align 4
+  call void @"?create_key_stream@@YAXPADH@Z"(i8* %2, i32 %1)
+  %call1 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([67 x i8], [67 x i8]* @"??_C@_0ED@MCBCPBCB@?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DNStart?5encrypting?5cip@", i32 0, i32 0)) #5
+  store i32 0, i32* %i, align 4
+  br label %for.cond
+
+for.cond:                                         ; preds = %for.inc, %entry
+  %3 = load i32, i32* %i, align 4
+  %4 = load i32, i32* %textLength, align 4
+  %cmp = icmp slt i32 %3, %4
+  br i1 %cmp, label %for.body, label %for.end
+
+for.body:                                         ; preds = %for.cond
+  %5 = load i32, i32* %i, align 4
+  %arrayidx = getelementptr inbounds [65534 x i32], [65534 x i32]* @"?KeyStream@@3PAHA", i32 0, i32 %5
+  %6 = load i32, i32* %arrayidx, align 4
+  %7 = load i8*, i8** %text.addr, align 4
+  %8 = load i32, i32* %i, align 4
+  %arrayidx2 = getelementptr inbounds i8, i8* %7, i32 %8
+  %9 = load i8, i8* %arrayidx2, align 1
+  %conv = sext i8 %9 to i32
+  %xor = xor i32 %6, %conv
+  %conv3 = trunc i32 %xor to i8
+  %10 = load i32, i32* %i, align 4
+  %arrayidx4 = getelementptr inbounds [65534 x i8], [65534 x i8]* @"?CryptoText@@3PADA", i32 0, i32 %10
+  store i8 %conv3, i8* %arrayidx4, align 1
+  br label %for.inc
+
+for.inc:                                          ; preds = %for.body
+  %11 = load i32, i32* %i, align 4
+  %inc = add nsw i32 %11, 1
+  store i32 %inc, i32* %i, align 4
+  br label %for.cond
+
+for.end:                                          ; preds = %for.cond
+  store i32 0, i32* %i5, align 4
+  br label %for.cond6
+
+for.cond6:                                        ; preds = %for.inc12, %for.end
+  %12 = load i32, i32* %i5, align 4
+  %13 = load i32, i32* %textLength, align 4
+  %cmp7 = icmp slt i32 %12, %13
+  br i1 %cmp7, label %for.body8, label %for.end14
+
+for.body8:                                        ; preds = %for.cond6
+  %14 = load i32, i32* %i5, align 4
+  %arrayidx9 = getelementptr inbounds [65534 x i8], [65534 x i8]* @"?CryptoText@@3PADA", i32 0, i32 %14
+  %15 = load i8, i8* %arrayidx9, align 1
+  %conv10 = sext i8 %15 to i32
+  %call11 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @"??_C@_02HAOIJKIC@?$CFc?$AA@", i32 0, i32 0), i32 %conv10) #5
+  br label %for.inc12
+
+for.inc12:                                        ; preds = %for.body8
+  %16 = load i32, i32* %i5, align 4
+  %inc13 = add nsw i32 %16, 1
+  store i32 %inc13, i32* %i5, align 4
+  br label %for.cond6
+
+for.end14:                                        ; preds = %for.cond6
+  %call15 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([111 x i8], [111 x i8]* @"??_C@_0GP@EOOLEAEI@?6?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DNEncryption?5complete@", i32 0, i32 0)) #5
+  store i32 0, i32* %i16, align 4
+  br label %for.cond17
+
+for.cond17:                                       ; preds = %for.inc26, %for.end14
+  %17 = load i32, i32* %i16, align 4
+  %18 = load i32, i32* %textLength, align 4
+  %cmp18 = icmp slt i32 %17, %18
+  br i1 %cmp18, label %for.body19, label %for.end28
+
+for.body19:                                       ; preds = %for.cond17
+  %19 = load i32, i32* %i16, align 4
+  %arrayidx20 = getelementptr inbounds [65534 x i32], [65534 x i32]* @"?KeyStream@@3PAHA", i32 0, i32 %19
+  %20 = load i32, i32* %arrayidx20, align 4
+  %21 = load i32, i32* %i16, align 4
+  %arrayidx21 = getelementptr inbounds [65534 x i8], [65534 x i8]* @"?CryptoText@@3PADA", i32 0, i32 %21
+  %22 = load i8, i8* %arrayidx21, align 1
+  %conv22 = sext i8 %22 to i32
+  %xor23 = xor i32 %20, %conv22
+  %conv24 = trunc i32 %xor23 to i8
+  %23 = load i32, i32* %i16, align 4
+  %arrayidx25 = getelementptr inbounds [65534 x i8], [65534 x i8]* @"?PlainText@@3PADA", i32 0, i32 %23
+  store i8 %conv24, i8* %arrayidx25, align 1
+  br label %for.inc26
+
+for.inc26:                                        ; preds = %for.body19
+  %24 = load i32, i32* %i16, align 4
+  %inc27 = add nsw i32 %24, 1
+  store i32 %inc27, i32* %i16, align 4
+  br label %for.cond17
+
+for.end28:                                        ; preds = %for.cond17
+  store i32 0, i32* %i29, align 4
+  br label %for.cond30
+
+for.cond30:                                       ; preds = %for.inc36, %for.end28
+  %25 = load i32, i32* %i29, align 4
+  %26 = load i32, i32* %textLength, align 4
+  %cmp31 = icmp slt i32 %25, %26
+  br i1 %cmp31, label %for.body32, label %for.end38
+
+for.body32:                                       ; preds = %for.cond30
+  %27 = load i32, i32* %i29, align 4
+  %arrayidx33 = getelementptr inbounds [65534 x i8], [65534 x i8]* @"?PlainText@@3PADA", i32 0, i32 %27
+  %28 = load i8, i8* %arrayidx33, align 1
+  %conv34 = sext i8 %28 to i32
+  %call35 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @"??_C@_02HAOIJKIC@?$CFc?$AA@", i32 0, i32 0), i32 %conv34) #5
+  br label %for.inc36
+
+for.inc36:                                        ; preds = %for.body32
+  %29 = load i32, i32* %i29, align 4
+  %inc37 = add nsw i32 %29, 1
+  store i32 %inc37, i32* %i29, align 4
+  br label %for.cond30
+
+for.end38:                                        ; preds = %for.cond30
+  %call39 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([47 x i8], [47 x i8]* @"??_C@_0CP@KFLJDBCD@?6?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DN?$DNDecryption?5Complete@", i32 0, i32 0)) #5
+  %call40 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @"??_C@_01EEMJAFIK@?6?$AA@", i32 0, i32 0)) #5
+  ret void
+}
+
+; Function Attrs: nounwind
+declare dso_local i32 @strlen(i8*) #2
+
+; Function Attrs: nounwind
+declare dllimport i32 @printf(i8*, ...) #2
+
+; Function Attrs: noinline norecurse optnone sspstrong
+define dso_local i32 @main() #3 {
+entry:
+  %retval = alloca i32, align 4
+  %t = alloca i32, align 4
+  %sum = alloca i32, align 4
+  %i = alloca i32, align 4
+  %text = alloca [27 x i8], align 1
+  store i32 0, i32* %retval, align 4
+  store i32 0, i32* %sum, align 4
+  %call = call i32 @clock() #5
+  store i32 %call, i32* %t, align 4
+  store i32 0, i32* %i, align 4
+  br label %for.cond
+
+for.cond:                                         ; preds = %for.inc, %entry
+  %0 = load i32, i32* %i, align 4
+  %cmp = icmp slt i32 %0, 100
+  br i1 %cmp, label %for.body, label %for.end
+
+for.body:                                         ; preds = %for.cond
+  %1 = bitcast [27 x i8]* %text to i8*
+  call void @llvm.memcpy.p0i8.p0i8.i32(i8* align 1 %1, i8* align 1 getelementptr inbounds ([27 x i8], [27 x i8]* @__const.main.text, i32 0, i32 0), i32 27, i1 false)
+  %arraydecay = getelementptr inbounds [27 x i8], [27 x i8]* %text, i32 0, i32 0
+  call void @"?Encrypt@@YAXPAD@Z"(i8* %arraydecay)
+  br label %for.inc
+
+for.inc:                                          ; preds = %for.body
+  %2 = load i32, i32* %i, align 4
+  %inc = add nsw i32 %2, 1
+  store i32 %inc, i32* %i, align 4
+  br label %for.cond
+
+for.end:                                          ; preds = %for.cond
+  %call1 = call i32 @clock() #5
+  %3 = load i32, i32* %t, align 4
+  %sub = sub nsw i32 %call1, %3
+  store i32 %sub, i32* %t, align 4
+  %4 = load i32, i32* %t, align 4
+  %conv = sitofp i32 %4 to float
+  %div = fdiv float %conv, 1.000000e+03
+  %conv2 = fpext float %div to double
+  %5 = load i32, i32* %sum, align 4
+  %call3 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([23 x i8], [23 x i8]* @"??_C@_0BH@LENNACFI@result?$DN?$CFld?0time?$DN?$CFlf?5s?6?$AA@", i32 0, i32 0), i32 %5, double %conv2) #5
+  ret i32 0
+}
+
+; Function Attrs: nounwind
+declare dllimport i32 @clock() #2
+
+; Function Attrs: argmemonly nounwind
+declare void @llvm.memcpy.p0i8.p0i8.i32(i8* nocapture writeonly, i8* nocapture readonly, i32, i1) #4
+
+attributes #0 = { noinline nounwind optnone sspstrong "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="pentium4" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #1 = { noinline optnone sspstrong "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="pentium4" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #2 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="pentium4" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #3 = { noinline norecurse optnone sspstrong "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="pentium4" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #4 = { argmemonly nounwind }
+attributes #5 = { nounwind }
+
+!llvm.linker.options = !{!0, !1, !2, !3, !4}
+!llvm.ident = !{!5}
+!llvm.module.flags = !{!6, !7}
+
+!0 = !{!"/DEFAULTLIB:msvcrtd.lib"}
+!1 = !{!"/DEFAULTLIB:oldnames.lib"}
+!2 = !{!"/FAILIFMISMATCH:\22_MSC_VER=1600\22"}
+!3 = !{!"/FAILIFMISMATCH:\22_ITERATOR_DEBUG_LEVEL=2\22"}
+!4 = !{!"/DEFAULTLIB:msvcprtd.lib"}
+!5 = !{!"Obfuscator-LLVM clang version 8.0.1 (tags/RELEASE_801/final) (based on Obfuscator-LLVM 8.0.1)"}
+!6 = !{i32 1, !"NumRegisterParameters", i32 0}
+!7 = !{i32 1, !"wchar_size", i32 2}

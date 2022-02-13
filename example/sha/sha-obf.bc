@@ -1,0 +1,1066 @@
+; ModuleID = './input/SHA.bc'
+source_filename = "llvm-link"
+target datalayout = "e-m:x-p:32:32-i64:64-f80:32-n8:16:32-a:0:32-S32"
+target triple = "i686-pc-windows-msvc16.0.0"
+
+%Struct.RetValue = type <{ i32*, i8** }>
+%Struct.RetValue.0 = type <{ i32* }>
+%Struct.RetValue.1 = type <{}>
+%struct.sha1_state = type { [64 x i8], i32, i32, [5 x i32] }
+
+$"??_C@_02HAOIJKIC@?$CFc?$AA@" = comdat any
+
+$"??_C@_01EEMJAFIK@?6?$AA@" = comdat any
+
+$"??_C@_02NJNOFBBI@?$CFx?$AA@" = comdat any
+
+$"??_C@_0BH@LENNACFI@result?$DN?$CFld?0time?$DN?$CFlf?5s?6?$AA@" = comdat any
+
+@"__const.?Really_main@@YAHXZ.msg" = private unnamed_addr constant [50 x i8] c"i am a student,i come from china\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00", align 1
+@"??_C@_02HAOIJKIC@?$CFc?$AA@" = linkonce_odr dso_local unnamed_addr constant [3 x i8] c"%c\00", comdat, align 1
+@"??_C@_01EEMJAFIK@?6?$AA@" = linkonce_odr dso_local unnamed_addr constant [2 x i8] c"\0A\00", comdat, align 1
+@"??_C@_02NJNOFBBI@?$CFx?$AA@" = linkonce_odr dso_local unnamed_addr constant [3 x i8] c"%x\00", comdat, align 1
+@"??_C@_0BH@LENNACFI@result?$DN?$CFld?0time?$DN?$CFlf?5s?6?$AA@" = linkonce_odr dso_local unnamed_addr constant [23 x i8] c"result=%ld,time=%lf s\0A\00", comdat, align 1
+@Struct.RetValue = internal global %Struct.RetValue zeroinitializer
+@Struct.RetValue.1 = internal global %Struct.RetValue.0 zeroinitializer
+@Struct.RetValue.3 = internal global %Struct.RetValue.1 zeroinitializer
+
+; Function Attrs: noinline optnone sspstrong
+define dso_local void @"?sha1_copy@@YAXPAUsha1_state@@PBEK@Z"(%struct.sha1_state* %md, i8* %buf, i32 %len) #0 {
+entry:
+  %len.addr = alloca i32, align 4
+  %buf.addr = alloca i8*, align 4
+  %md.addr = alloca %struct.sha1_state*, align 4
+  %x = alloca i32, align 4
+  %y = alloca i32, align 4
+  store i32 %len, i32* %len.addr, align 4
+  store i8* %buf, i8** %buf.addr, align 4
+  store %struct.sha1_state* %md, %struct.sha1_state** %md.addr, align 4
+  br label %while.cond
+
+while.cond:                                       ; preds = %if.end, %entry
+  %0 = load i32, i32* %len.addr, align 4
+  %tobool = icmp ne i32 %0, 0
+  br i1 %tobool, label %while.body, label %while.end
+
+while.body:                                       ; preds = %while.cond
+  %1 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buflen = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %1, i32 0, i32 1
+  %2 = load i32, i32* %buflen, align 4
+  %sub = sub i32 64, %2
+  %3 = load i32, i32* %len.addr, align 4
+  %cmp = icmp ult i32 %sub, %3
+  br i1 %cmp, label %cond.true, label %cond.false
+
+cond.true:                                        ; preds = %while.body
+  %4 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buflen1 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %4, i32 0, i32 1
+  %5 = load i32, i32* %buflen1, align 4
+  %sub2 = sub i32 64, %5
+  br label %cond.end
+
+cond.false:                                       ; preds = %while.body
+  %6 = load i32, i32* %len.addr, align 4
+  br label %cond.end
+
+cond.end:                                         ; preds = %cond.false, %cond.true
+  %cond = phi i32 [ %sub2, %cond.true ], [ %6, %cond.false ]
+  store i32 %cond, i32* %x, align 4
+  %7 = load i32, i32* %x, align 4
+  %8 = load i32, i32* %len.addr, align 4
+  %sub3 = sub i32 %8, %7
+  store i32 %sub3, i32* %len.addr, align 4
+  store i32 0, i32* %y, align 4
+  br label %CallOutFuncBB
+
+CallOutFuncBB:                                    ; preds = %cond.end
+  call void @for.cond.OutLineFunc(i32* %y, i32* %x, i8** %buf.addr, %struct.sha1_state** %md.addr)
+  %9 = getelementptr inbounds %Struct.RetValue, %Struct.RetValue* @Struct.RetValue, i32 0, i32 0
+  %10 = load i32*, i32** %9, align 4
+  %11 = load i32, i32* %10, align 4
+  store i32 %11, i32* %y
+  %12 = getelementptr inbounds %Struct.RetValue, %Struct.RetValue* @Struct.RetValue, i32 0, i32 1
+  %13 = load i8**, i8*** %12, align 4
+  %14 = load i8*, i8** %13, align 4
+  store i8* %14, i8** %buf.addr
+  br label %new
+
+new:                                              ; preds = %CallOutFuncBB
+  %15 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buflen8 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %15, i32 0, i32 1
+  %16 = load i32, i32* %buflen8, align 4
+  %cmp9 = icmp eq i32 %16, 64
+  br i1 %cmp9, label %if.then, label %if.end
+
+if.then:                                          ; preds = %new
+  %17 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  call void @"?sha1_compress@@YAXPAUsha1_state@@@Z"(%struct.sha1_state* %17)
+  %18 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buflen10 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %18, i32 0, i32 1
+  store i32 0, i32* %buflen10, align 4
+  %19 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %msglen = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %19, i32 0, i32 2
+  %20 = load i32, i32* %msglen, align 4
+  %add = add i32 %20, 64
+  store i32 %add, i32* %msglen, align 4
+  br label %if.end
+
+if.end:                                           ; preds = %if.then, %new
+  br label %while.cond
+
+while.end:                                        ; preds = %while.cond
+  ret void
+}
+
+; Function Attrs: noinline nounwind optnone sspstrong
+define internal void @"?sha1_compress@@YAXPAUsha1_state@@@Z"(%struct.sha1_state* %md) #1 {
+entry:
+  %md.addr = alloca %struct.sha1_state*, align 4
+  %w = alloca [80 x i32], align 4
+  %a = alloca i32, align 4
+  %b = alloca i32, align 4
+  %c = alloca i32, align 4
+  %d = alloca i32, align 4
+  %e = alloca i32, align 4
+  %temp = alloca i32, align 4
+  %x = alloca i32, align 4
+  store %struct.sha1_state* %md, %struct.sha1_state** %md.addr, align 4
+  store i32 0, i32* %x, align 4
+  br label %CallOutFuncBB
+
+CallOutFuncBB:                                    ; preds = %entry
+  call void @for.cond.OutLineFunc.2(i32* %x, %struct.sha1_state** %md.addr, [80 x i32]* %w)
+  %0 = getelementptr inbounds %Struct.RetValue.0, %Struct.RetValue.0* @Struct.RetValue.1, i32 0, i32 0
+  %1 = load i32*, i32** %0, align 4
+  %2 = load i32, i32* %1, align 4
+  store i32 %2, i32* %x
+  br label %for.cond27
+
+for.cond27:                                       ; preds = %CallOutFuncBB, %for.inc53
+  %3 = load i32, i32* %x, align 4
+  %cmp28 = icmp ult i32 %3, 80
+  br i1 %cmp28, label %for.body29, label %for.end55
+
+for.body29:                                       ; preds = %for.cond27
+  %4 = load i32, i32* %x, align 4
+  %sub = sub i32 %4, 3
+  %arrayidx30 = getelementptr inbounds [80 x i32], [80 x i32]* %w, i32 0, i32 %sub
+  %5 = load i32, i32* %arrayidx30, align 4
+  %6 = load i32, i32* %x, align 4
+  %sub31 = sub i32 %6, 8
+  %arrayidx32 = getelementptr inbounds [80 x i32], [80 x i32]* %w, i32 0, i32 %sub31
+  %7 = load i32, i32* %arrayidx32, align 4
+  %xor = xor i32 %5, %7
+  %8 = load i32, i32* %x, align 4
+  %sub33 = sub i32 %8, 14
+  %arrayidx34 = getelementptr inbounds [80 x i32], [80 x i32]* %w, i32 0, i32 %sub33
+  %9 = load i32, i32* %arrayidx34, align 4
+  %xor35 = xor i32 %xor, %9
+  %10 = load i32, i32* %x, align 4
+  %sub36 = sub i32 %10, 16
+  %arrayidx37 = getelementptr inbounds [80 x i32], [80 x i32]* %w, i32 0, i32 %sub36
+  %11 = load i32, i32* %arrayidx37, align 4
+  %xor38 = xor i32 %xor35, %11
+  %shl39 = shl i32 %xor38, 1
+  %12 = load i32, i32* %x, align 4
+  %sub40 = sub i32 %12, 3
+  %arrayidx41 = getelementptr inbounds [80 x i32], [80 x i32]* %w, i32 0, i32 %sub40
+  %13 = load i32, i32* %arrayidx41, align 4
+  %14 = load i32, i32* %x, align 4
+  %sub42 = sub i32 %14, 8
+  %arrayidx43 = getelementptr inbounds [80 x i32], [80 x i32]* %w, i32 0, i32 %sub42
+  %15 = load i32, i32* %arrayidx43, align 4
+  %xor44 = xor i32 %13, %15
+  %16 = load i32, i32* %x, align 4
+  %sub45 = sub i32 %16, 14
+  %arrayidx46 = getelementptr inbounds [80 x i32], [80 x i32]* %w, i32 0, i32 %sub45
+  %17 = load i32, i32* %arrayidx46, align 4
+  %xor47 = xor i32 %xor44, %17
+  %18 = load i32, i32* %x, align 4
+  %sub48 = sub i32 %18, 16
+  %arrayidx49 = getelementptr inbounds [80 x i32], [80 x i32]* %w, i32 0, i32 %sub48
+  %19 = load i32, i32* %arrayidx49, align 4
+  %xor50 = xor i32 %xor47, %19
+  %shr = lshr i32 %xor50, 31
+  %or51 = or i32 %shl39, %shr
+  %20 = load i32, i32* %x, align 4
+  %arrayidx52 = getelementptr inbounds [80 x i32], [80 x i32]* %w, i32 0, i32 %20
+  store i32 %or51, i32* %arrayidx52, align 4
+  br label %for.inc53
+
+for.inc53:                                        ; preds = %for.body29
+  %21 = load i32, i32* %x, align 4
+  %inc54 = add i32 %21, 1
+  store i32 %inc54, i32* %x, align 4
+  br label %for.cond27
+
+for.end55:                                        ; preds = %for.cond27
+  %22 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %s = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %22, i32 0, i32 3
+  %arrayidx56 = getelementptr inbounds [5 x i32], [5 x i32]* %s, i32 0, i32 0
+  %23 = load i32, i32* %arrayidx56, align 4
+  store i32 %23, i32* %a, align 4
+  %24 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %s57 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %24, i32 0, i32 3
+  %arrayidx58 = getelementptr inbounds [5 x i32], [5 x i32]* %s57, i32 0, i32 1
+  %25 = load i32, i32* %arrayidx58, align 4
+  store i32 %25, i32* %b, align 4
+  %26 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %s59 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %26, i32 0, i32 3
+  %arrayidx60 = getelementptr inbounds [5 x i32], [5 x i32]* %s59, i32 0, i32 2
+  %27 = load i32, i32* %arrayidx60, align 4
+  store i32 %27, i32* %c, align 4
+  %28 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %s61 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %28, i32 0, i32 3
+  %arrayidx62 = getelementptr inbounds [5 x i32], [5 x i32]* %s61, i32 0, i32 3
+  %29 = load i32, i32* %arrayidx62, align 4
+  store i32 %29, i32* %d, align 4
+  %30 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %s63 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %30, i32 0, i32 3
+  %arrayidx64 = getelementptr inbounds [5 x i32], [5 x i32]* %s63, i32 0, i32 4
+  %31 = load i32, i32* %arrayidx64, align 4
+  store i32 %31, i32* %e, align 4
+  store i32 0, i32* %x, align 4
+  br label %for.cond65
+
+for.cond65:                                       ; preds = %for.inc81, %for.end55
+  %32 = load i32, i32* %x, align 4
+  %cmp66 = icmp ult i32 %32, 20
+  br i1 %cmp66, label %for.body67, label %for.end83
+
+for.body67:                                       ; preds = %for.cond65
+  %33 = load i32, i32* %a, align 4
+  %shl68 = shl i32 %33, 5
+  %34 = load i32, i32* %a, align 4
+  %shr69 = lshr i32 %34, 27
+  %or70 = or i32 %shl68, %shr69
+  %35 = load i32, i32* %b, align 4
+  %36 = load i32, i32* %c, align 4
+  %and71 = and i32 %35, %36
+  %37 = load i32, i32* %b, align 4
+  %neg = xor i32 %37, -1
+  %38 = load i32, i32* %d, align 4
+  %and72 = and i32 %neg, %38
+  %or73 = or i32 %and71, %and72
+  %add = add i32 %or70, %or73
+  %39 = load i32, i32* %e, align 4
+  %add74 = add i32 %add, %39
+  %40 = load i32, i32* %x, align 4
+  %arrayidx75 = getelementptr inbounds [80 x i32], [80 x i32]* %w, i32 0, i32 %40
+  %41 = load i32, i32* %arrayidx75, align 4
+  %add76 = add i32 %add74, %41
+  %add77 = add i32 %add76, 1518500249
+  store i32 %add77, i32* %temp, align 4
+  %42 = load i32, i32* %d, align 4
+  store i32 %42, i32* %e, align 4
+  %43 = load i32, i32* %c, align 4
+  store i32 %43, i32* %d, align 4
+  %44 = load i32, i32* %b, align 4
+  %shl78 = shl i32 %44, 30
+  %45 = load i32, i32* %b, align 4
+  %shr79 = lshr i32 %45, 2
+  %or80 = or i32 %shl78, %shr79
+  store i32 %or80, i32* %c, align 4
+  %46 = load i32, i32* %a, align 4
+  store i32 %46, i32* %b, align 4
+  %47 = load i32, i32* %temp, align 4
+  store i32 %47, i32* %a, align 4
+  br label %for.inc81
+
+for.inc81:                                        ; preds = %for.body67
+  %48 = load i32, i32* %x, align 4
+  %inc82 = add i32 %48, 1
+  store i32 %inc82, i32* %x, align 4
+  br label %for.cond65
+
+for.end83:                                        ; preds = %for.cond65
+  br label %for.cond84
+
+for.cond84:                                       ; preds = %for.inc100, %for.end83
+  %49 = load i32, i32* %x, align 4
+  %cmp85 = icmp ult i32 %49, 40
+  br i1 %cmp85, label %for.body86, label %for.end102
+
+for.body86:                                       ; preds = %for.cond84
+  %50 = load i32, i32* %a, align 4
+  %shl87 = shl i32 %50, 5
+  %51 = load i32, i32* %a, align 4
+  %shr88 = lshr i32 %51, 27
+  %or89 = or i32 %shl87, %shr88
+  %52 = load i32, i32* %b, align 4
+  %53 = load i32, i32* %c, align 4
+  %xor90 = xor i32 %52, %53
+  %54 = load i32, i32* %d, align 4
+  %xor91 = xor i32 %xor90, %54
+  %add92 = add i32 %or89, %xor91
+  %55 = load i32, i32* %e, align 4
+  %add93 = add i32 %add92, %55
+  %56 = load i32, i32* %x, align 4
+  %arrayidx94 = getelementptr inbounds [80 x i32], [80 x i32]* %w, i32 0, i32 %56
+  %57 = load i32, i32* %arrayidx94, align 4
+  %add95 = add i32 %add93, %57
+  %add96 = add i32 %add95, 1859775393
+  store i32 %add96, i32* %temp, align 4
+  %58 = load i32, i32* %d, align 4
+  store i32 %58, i32* %e, align 4
+  %59 = load i32, i32* %c, align 4
+  store i32 %59, i32* %d, align 4
+  %60 = load i32, i32* %b, align 4
+  %shl97 = shl i32 %60, 30
+  %61 = load i32, i32* %b, align 4
+  %shr98 = lshr i32 %61, 2
+  %or99 = or i32 %shl97, %shr98
+  store i32 %or99, i32* %c, align 4
+  %62 = load i32, i32* %a, align 4
+  store i32 %62, i32* %b, align 4
+  %63 = load i32, i32* %temp, align 4
+  store i32 %63, i32* %a, align 4
+  br label %for.inc100
+
+for.inc100:                                       ; preds = %for.body86
+  %64 = load i32, i32* %x, align 4
+  %inc101 = add i32 %64, 1
+  store i32 %inc101, i32* %x, align 4
+  br label %for.cond84
+
+for.end102:                                       ; preds = %for.cond84
+  br label %for.cond103
+
+for.cond103:                                      ; preds = %for.inc122, %for.end102
+  %65 = load i32, i32* %x, align 4
+  %cmp104 = icmp ult i32 %65, 60
+  br i1 %cmp104, label %for.body105, label %for.end124
+
+for.body105:                                      ; preds = %for.cond103
+  %66 = load i32, i32* %a, align 4
+  %shl106 = shl i32 %66, 5
+  %67 = load i32, i32* %a, align 4
+  %shr107 = lshr i32 %67, 27
+  %or108 = or i32 %shl106, %shr107
+  %68 = load i32, i32* %b, align 4
+  %69 = load i32, i32* %c, align 4
+  %and109 = and i32 %68, %69
+  %70 = load i32, i32* %b, align 4
+  %71 = load i32, i32* %d, align 4
+  %and110 = and i32 %70, %71
+  %or111 = or i32 %and109, %and110
+  %72 = load i32, i32* %c, align 4
+  %73 = load i32, i32* %d, align 4
+  %and112 = and i32 %72, %73
+  %or113 = or i32 %or111, %and112
+  %add114 = add i32 %or108, %or113
+  %74 = load i32, i32* %e, align 4
+  %add115 = add i32 %add114, %74
+  %75 = load i32, i32* %x, align 4
+  %arrayidx116 = getelementptr inbounds [80 x i32], [80 x i32]* %w, i32 0, i32 %75
+  %76 = load i32, i32* %arrayidx116, align 4
+  %add117 = add i32 %add115, %76
+  %add118 = add i32 %add117, -1894007588
+  store i32 %add118, i32* %temp, align 4
+  %77 = load i32, i32* %d, align 4
+  store i32 %77, i32* %e, align 4
+  %78 = load i32, i32* %c, align 4
+  store i32 %78, i32* %d, align 4
+  %79 = load i32, i32* %b, align 4
+  %shl119 = shl i32 %79, 30
+  %80 = load i32, i32* %b, align 4
+  %shr120 = lshr i32 %80, 2
+  %or121 = or i32 %shl119, %shr120
+  store i32 %or121, i32* %c, align 4
+  %81 = load i32, i32* %a, align 4
+  store i32 %81, i32* %b, align 4
+  %82 = load i32, i32* %temp, align 4
+  store i32 %82, i32* %a, align 4
+  br label %for.inc122
+
+for.inc122:                                       ; preds = %for.body105
+  %83 = load i32, i32* %x, align 4
+  %inc123 = add i32 %83, 1
+  store i32 %inc123, i32* %x, align 4
+  br label %for.cond103
+
+for.end124:                                       ; preds = %for.cond103
+  br label %for.cond125
+
+for.cond125:                                      ; preds = %for.inc141, %for.end124
+  %84 = load i32, i32* %x, align 4
+  %cmp126 = icmp ult i32 %84, 80
+  br i1 %cmp126, label %for.body127, label %for.end143
+
+for.body127:                                      ; preds = %for.cond125
+  %85 = load i32, i32* %a, align 4
+  %shl128 = shl i32 %85, 5
+  %86 = load i32, i32* %a, align 4
+  %shr129 = lshr i32 %86, 27
+  %or130 = or i32 %shl128, %shr129
+  %87 = load i32, i32* %b, align 4
+  %88 = load i32, i32* %c, align 4
+  %xor131 = xor i32 %87, %88
+  %89 = load i32, i32* %d, align 4
+  %xor132 = xor i32 %xor131, %89
+  %add133 = add i32 %or130, %xor132
+  %90 = load i32, i32* %e, align 4
+  %add134 = add i32 %add133, %90
+  %91 = load i32, i32* %x, align 4
+  %arrayidx135 = getelementptr inbounds [80 x i32], [80 x i32]* %w, i32 0, i32 %91
+  %92 = load i32, i32* %arrayidx135, align 4
+  %add136 = add i32 %add134, %92
+  %add137 = add i32 %add136, -899497514
+  store i32 %add137, i32* %temp, align 4
+  %93 = load i32, i32* %d, align 4
+  store i32 %93, i32* %e, align 4
+  %94 = load i32, i32* %c, align 4
+  store i32 %94, i32* %d, align 4
+  %95 = load i32, i32* %b, align 4
+  %shl138 = shl i32 %95, 30
+  %96 = load i32, i32* %b, align 4
+  %shr139 = lshr i32 %96, 2
+  %or140 = or i32 %shl138, %shr139
+  store i32 %or140, i32* %c, align 4
+  %97 = load i32, i32* %a, align 4
+  store i32 %97, i32* %b, align 4
+  %98 = load i32, i32* %temp, align 4
+  store i32 %98, i32* %a, align 4
+  br label %for.inc141
+
+for.inc141:                                       ; preds = %for.body127
+  %99 = load i32, i32* %x, align 4
+  %inc142 = add i32 %99, 1
+  store i32 %inc142, i32* %x, align 4
+  br label %for.cond125
+
+for.end143:                                       ; preds = %for.cond125
+  %100 = load i32, i32* %a, align 4
+  %101 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %s144 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %101, i32 0, i32 3
+  %arrayidx145 = getelementptr inbounds [5 x i32], [5 x i32]* %s144, i32 0, i32 0
+  %102 = load i32, i32* %arrayidx145, align 4
+  %add146 = add i32 %102, %100
+  store i32 %add146, i32* %arrayidx145, align 4
+  %103 = load i32, i32* %b, align 4
+  %104 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %s147 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %104, i32 0, i32 3
+  %arrayidx148 = getelementptr inbounds [5 x i32], [5 x i32]* %s147, i32 0, i32 1
+  %105 = load i32, i32* %arrayidx148, align 4
+  %add149 = add i32 %105, %103
+  store i32 %add149, i32* %arrayidx148, align 4
+  %106 = load i32, i32* %c, align 4
+  %107 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %s150 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %107, i32 0, i32 3
+  %arrayidx151 = getelementptr inbounds [5 x i32], [5 x i32]* %s150, i32 0, i32 2
+  %108 = load i32, i32* %arrayidx151, align 4
+  %add152 = add i32 %108, %106
+  store i32 %add152, i32* %arrayidx151, align 4
+  %109 = load i32, i32* %d, align 4
+  %110 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %s153 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %110, i32 0, i32 3
+  %arrayidx154 = getelementptr inbounds [5 x i32], [5 x i32]* %s153, i32 0, i32 3
+  %111 = load i32, i32* %arrayidx154, align 4
+  %add155 = add i32 %111, %109
+  store i32 %add155, i32* %arrayidx154, align 4
+  %112 = load i32, i32* %e, align 4
+  %113 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %s156 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %113, i32 0, i32 3
+  %arrayidx157 = getelementptr inbounds [5 x i32], [5 x i32]* %s156, i32 0, i32 4
+  %114 = load i32, i32* %arrayidx157, align 4
+  %add158 = add i32 %114, %112
+  store i32 %add158, i32* %arrayidx157, align 4
+  ret void
+}
+
+; Function Attrs: noinline optnone sspstrong
+define dso_local void @"?sha1_finish@@YAXPAUsha1_state@@PAE@Z"(%struct.sha1_state* %md, i8* %dst) #0 {
+entry:
+  %dst.addr = alloca i8*, align 4
+  %md.addr = alloca %struct.sha1_state*, align 4
+  %l1 = alloca i32, align 4
+  %l2 = alloca i32, align 4
+  %i = alloca i32, align 4
+  store i8* %dst, i8** %dst.addr, align 4
+  store %struct.sha1_state* %md, %struct.sha1_state** %md.addr, align 4
+  %0 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buflen = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %0, i32 0, i32 1
+  %1 = load i32, i32* %buflen, align 4
+  %2 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %msglen = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %2, i32 0, i32 2
+  %3 = load i32, i32* %msglen, align 4
+  %add = add i32 %3, %1
+  store i32 %add, i32* %msglen, align 4
+  %4 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %msglen1 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %4, i32 0, i32 2
+  %5 = load i32, i32* %msglen1, align 4
+  %shr = lshr i32 %5, 29
+  store i32 %shr, i32* %l2, align 4
+  %6 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %msglen2 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %6, i32 0, i32 2
+  %7 = load i32, i32* %msglen2, align 4
+  %shl = shl i32 %7, 3
+  store i32 %shl, i32* %l1, align 4
+  %8 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buf = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %8, i32 0, i32 0
+  %9 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buflen3 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %9, i32 0, i32 1
+  %10 = load i32, i32* %buflen3, align 4
+  %inc = add i32 %10, 1
+  store i32 %inc, i32* %buflen3, align 4
+  %arrayidx = getelementptr inbounds [64 x i8], [64 x i8]* %buf, i32 0, i32 %10
+  store i8 -128, i8* %arrayidx, align 1
+  %11 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buflen4 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %11, i32 0, i32 1
+  %12 = load i32, i32* %buflen4, align 4
+  %cmp = icmp ugt i32 %12, 56
+  br i1 %cmp, label %if.then, label %if.end
+
+if.then:                                          ; preds = %entry
+  br label %CallOutFuncBB
+
+CallOutFuncBB:                                    ; preds = %if.then
+  call void @while.cond.OutLineFunc(%struct.sha1_state** %md.addr)
+  br label %if.end
+
+if.end:                                           ; preds = %CallOutFuncBB, %entry
+  br label %while.cond12
+
+while.cond12:                                     ; preds = %while.body15, %if.end
+  %13 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buflen13 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %13, i32 0, i32 1
+  %14 = load i32, i32* %buflen13, align 4
+  %cmp14 = icmp ult i32 %14, 56
+  br i1 %cmp14, label %while.body15, label %while.end20
+
+while.body15:                                     ; preds = %while.cond12
+  %15 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buf16 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %15, i32 0, i32 0
+  %16 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buflen17 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %16, i32 0, i32 1
+  %17 = load i32, i32* %buflen17, align 4
+  %inc18 = add i32 %17, 1
+  store i32 %inc18, i32* %buflen17, align 4
+  %arrayidx19 = getelementptr inbounds [64 x i8], [64 x i8]* %buf16, i32 0, i32 %17
+  store i8 0, i8* %arrayidx19, align 1
+  br label %while.cond12
+
+while.end20:                                      ; preds = %while.cond12
+  %18 = load i32, i32* %l2, align 4
+  %shr21 = lshr i32 %18, 24
+  %and = and i32 %shr21, 255
+  %conv = trunc i32 %and to i8
+  %19 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buf22 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %19, i32 0, i32 0
+  %arraydecay = getelementptr inbounds [64 x i8], [64 x i8]* %buf22, i32 0, i32 0
+  %add.ptr = getelementptr inbounds i8, i8* %arraydecay, i32 56
+  %arrayidx23 = getelementptr inbounds i8, i8* %add.ptr, i32 0
+  store i8 %conv, i8* %arrayidx23, align 1
+  %20 = load i32, i32* %l2, align 4
+  %shr24 = lshr i32 %20, 16
+  %and25 = and i32 %shr24, 255
+  %conv26 = trunc i32 %and25 to i8
+  %21 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buf27 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %21, i32 0, i32 0
+  %arraydecay28 = getelementptr inbounds [64 x i8], [64 x i8]* %buf27, i32 0, i32 0
+  %add.ptr29 = getelementptr inbounds i8, i8* %arraydecay28, i32 56
+  %arrayidx30 = getelementptr inbounds i8, i8* %add.ptr29, i32 1
+  store i8 %conv26, i8* %arrayidx30, align 1
+  %22 = load i32, i32* %l2, align 4
+  %shr31 = lshr i32 %22, 8
+  %and32 = and i32 %shr31, 255
+  %conv33 = trunc i32 %and32 to i8
+  %23 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buf34 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %23, i32 0, i32 0
+  %arraydecay35 = getelementptr inbounds [64 x i8], [64 x i8]* %buf34, i32 0, i32 0
+  %add.ptr36 = getelementptr inbounds i8, i8* %arraydecay35, i32 56
+  %arrayidx37 = getelementptr inbounds i8, i8* %add.ptr36, i32 2
+  store i8 %conv33, i8* %arrayidx37, align 1
+  %24 = load i32, i32* %l2, align 4
+  %and38 = and i32 %24, 255
+  %conv39 = trunc i32 %and38 to i8
+  %25 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buf40 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %25, i32 0, i32 0
+  %arraydecay41 = getelementptr inbounds [64 x i8], [64 x i8]* %buf40, i32 0, i32 0
+  %add.ptr42 = getelementptr inbounds i8, i8* %arraydecay41, i32 56
+  %arrayidx43 = getelementptr inbounds i8, i8* %add.ptr42, i32 3
+  store i8 %conv39, i8* %arrayidx43, align 1
+  %26 = load i32, i32* %l1, align 4
+  %shr44 = lshr i32 %26, 24
+  %and45 = and i32 %shr44, 255
+  %conv46 = trunc i32 %and45 to i8
+  %27 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buf47 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %27, i32 0, i32 0
+  %arraydecay48 = getelementptr inbounds [64 x i8], [64 x i8]* %buf47, i32 0, i32 0
+  %add.ptr49 = getelementptr inbounds i8, i8* %arraydecay48, i32 60
+  %arrayidx50 = getelementptr inbounds i8, i8* %add.ptr49, i32 0
+  store i8 %conv46, i8* %arrayidx50, align 1
+  %28 = load i32, i32* %l1, align 4
+  %shr51 = lshr i32 %28, 16
+  %and52 = and i32 %shr51, 255
+  %conv53 = trunc i32 %and52 to i8
+  %29 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buf54 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %29, i32 0, i32 0
+  %arraydecay55 = getelementptr inbounds [64 x i8], [64 x i8]* %buf54, i32 0, i32 0
+  %add.ptr56 = getelementptr inbounds i8, i8* %arraydecay55, i32 60
+  %arrayidx57 = getelementptr inbounds i8, i8* %add.ptr56, i32 1
+  store i8 %conv53, i8* %arrayidx57, align 1
+  %30 = load i32, i32* %l1, align 4
+  %shr58 = lshr i32 %30, 8
+  %and59 = and i32 %shr58, 255
+  %conv60 = trunc i32 %and59 to i8
+  %31 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buf61 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %31, i32 0, i32 0
+  %arraydecay62 = getelementptr inbounds [64 x i8], [64 x i8]* %buf61, i32 0, i32 0
+  %add.ptr63 = getelementptr inbounds i8, i8* %arraydecay62, i32 60
+  %arrayidx64 = getelementptr inbounds i8, i8* %add.ptr63, i32 2
+  store i8 %conv60, i8* %arrayidx64, align 1
+  %32 = load i32, i32* %l1, align 4
+  %and65 = and i32 %32, 255
+  %conv66 = trunc i32 %and65 to i8
+  %33 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %buf67 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %33, i32 0, i32 0
+  %arraydecay68 = getelementptr inbounds [64 x i8], [64 x i8]* %buf67, i32 0, i32 0
+  %add.ptr69 = getelementptr inbounds i8, i8* %arraydecay68, i32 60
+  %arrayidx70 = getelementptr inbounds i8, i8* %add.ptr69, i32 3
+  store i8 %conv66, i8* %arrayidx70, align 1
+  %34 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  call void @"?sha1_compress@@YAXPAUsha1_state@@@Z"(%struct.sha1_state* %34)
+  store i32 0, i32* %i, align 4
+  br label %for.cond
+
+for.cond:                                         ; preds = %for.inc, %while.end20
+  %35 = load i32, i32* %i, align 4
+  %cmp71 = icmp ult i32 %35, 5
+  br i1 %cmp71, label %for.body, label %for.end
+
+for.body:                                         ; preds = %for.cond
+  %36 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %s = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %36, i32 0, i32 3
+  %37 = load i32, i32* %i, align 4
+  %arrayidx72 = getelementptr inbounds [5 x i32], [5 x i32]* %s, i32 0, i32 %37
+  %38 = load i32, i32* %arrayidx72, align 4
+  %shr73 = lshr i32 %38, 24
+  %and74 = and i32 %shr73, 255
+  %conv75 = trunc i32 %and74 to i8
+  %39 = load i8*, i8** %dst.addr, align 4
+  %40 = load i32, i32* %i, align 4
+  %mul = mul i32 %40, 4
+  %add.ptr76 = getelementptr inbounds i8, i8* %39, i32 %mul
+  %arrayidx77 = getelementptr inbounds i8, i8* %add.ptr76, i32 0
+  store i8 %conv75, i8* %arrayidx77, align 1
+  %41 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %s78 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %41, i32 0, i32 3
+  %42 = load i32, i32* %i, align 4
+  %arrayidx79 = getelementptr inbounds [5 x i32], [5 x i32]* %s78, i32 0, i32 %42
+  %43 = load i32, i32* %arrayidx79, align 4
+  %shr80 = lshr i32 %43, 16
+  %and81 = and i32 %shr80, 255
+  %conv82 = trunc i32 %and81 to i8
+  %44 = load i8*, i8** %dst.addr, align 4
+  %45 = load i32, i32* %i, align 4
+  %mul83 = mul i32 %45, 4
+  %add.ptr84 = getelementptr inbounds i8, i8* %44, i32 %mul83
+  %arrayidx85 = getelementptr inbounds i8, i8* %add.ptr84, i32 1
+  store i8 %conv82, i8* %arrayidx85, align 1
+  %46 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %s86 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %46, i32 0, i32 3
+  %47 = load i32, i32* %i, align 4
+  %arrayidx87 = getelementptr inbounds [5 x i32], [5 x i32]* %s86, i32 0, i32 %47
+  %48 = load i32, i32* %arrayidx87, align 4
+  %shr88 = lshr i32 %48, 8
+  %and89 = and i32 %shr88, 255
+  %conv90 = trunc i32 %and89 to i8
+  %49 = load i8*, i8** %dst.addr, align 4
+  %50 = load i32, i32* %i, align 4
+  %mul91 = mul i32 %50, 4
+  %add.ptr92 = getelementptr inbounds i8, i8* %49, i32 %mul91
+  %arrayidx93 = getelementptr inbounds i8, i8* %add.ptr92, i32 2
+  store i8 %conv90, i8* %arrayidx93, align 1
+  %51 = load %struct.sha1_state*, %struct.sha1_state** %md.addr, align 4
+  %s94 = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %51, i32 0, i32 3
+  %52 = load i32, i32* %i, align 4
+  %arrayidx95 = getelementptr inbounds [5 x i32], [5 x i32]* %s94, i32 0, i32 %52
+  %53 = load i32, i32* %arrayidx95, align 4
+  %and96 = and i32 %53, 255
+  %conv97 = trunc i32 %and96 to i8
+  %54 = load i8*, i8** %dst.addr, align 4
+  %55 = load i32, i32* %i, align 4
+  %mul98 = mul i32 %55, 4
+  %add.ptr99 = getelementptr inbounds i8, i8* %54, i32 %mul98
+  %arrayidx100 = getelementptr inbounds i8, i8* %add.ptr99, i32 3
+  store i8 %conv97, i8* %arrayidx100, align 1
+  br label %for.inc
+
+for.inc:                                          ; preds = %for.body
+  %56 = load i32, i32* %i, align 4
+  %inc101 = add i32 %56, 1
+  store i32 %inc101, i32* %i, align 4
+  br label %for.cond
+
+for.end:                                          ; preds = %for.cond
+  ret void
+}
+
+; Function Attrs: argmemonly nounwind
+declare void @llvm.memcpy.p0i8.p0i8.i32(i8* nocapture writeonly, i8* nocapture readonly, i32, i1) #2
+
+; Function Attrs: nounwind
+declare dllimport i32 @printf(i8*, ...) #3
+
+; Function Attrs: nounwind
+declare dso_local i32 @strlen(i8*) #3
+
+; Function Attrs: noinline norecurse optnone sspstrong
+define dso_local i32 @main() #4 {
+entry:
+  %retval = alloca i32, align 4
+  %time = alloca i32, align 4
+  %sum = alloca i32, align 4
+  %i = alloca i32, align 4
+  store i32 0, i32* %retval, align 4
+  store i32 0, i32* %sum, align 4
+  %call = call i32 @clock() #5
+  store i32 %call, i32* %time, align 4
+  store i32 0, i32* %i, align 4
+  %RetValuePtr = alloca i32, align 4
+  br label %for.cond
+
+for.cond:                                         ; preds = %for.inc, %entry
+  %0 = load i32, i32* %i, align 4
+  %cmp = icmp slt i32 %0, 100
+  br i1 %cmp, label %for.body, label %for.end
+
+for.body:                                         ; preds = %for.cond
+  br label %"entry.?Really_main@@YAHXZ.Clone"
+
+"entry.?Really_main@@YAHXZ.Clone":                ; preds = %for.body
+  %"msg.?Really_main@@YAHXZ.Clone" = alloca [50 x i8], align 1
+  %"temp.?Really_main@@YAHXZ.Clone" = alloca [50 x i8], align 1
+  %"i.?Really_main@@YAHXZ.Clone" = alloca i32, align 4
+  %1 = bitcast [50 x i8]* %"msg.?Really_main@@YAHXZ.Clone" to i8*
+  call void @llvm.memcpy.p0i8.p0i8.i32(i8* align 1 %1, i8* align 1 getelementptr inbounds ([50 x i8], [50 x i8]* @"__const.?Really_main@@YAHXZ.msg", i32 0, i32 0), i32 50, i1 false)
+  store i32 0, i32* %"i.?Really_main@@YAHXZ.Clone", align 4
+  br label %"for.cond.?Really_main@@YAHXZ.Clone"
+
+"for.cond.?Really_main@@YAHXZ.Clone":             ; preds = %"for.inc.?Really_main@@YAHXZ.Clone", %"entry.?Really_main@@YAHXZ.Clone"
+  %2 = load i32, i32* %"i.?Really_main@@YAHXZ.Clone", align 4
+  %"cmp.?Really_main@@YAHXZ.Clone" = icmp slt i32 %2, 50
+  br i1 %"cmp.?Really_main@@YAHXZ.Clone", label %"for.body.?Really_main@@YAHXZ.Clone", label %"for.end.?Really_main@@YAHXZ.Clone"
+
+"for.body.?Really_main@@YAHXZ.Clone":             ; preds = %"for.cond.?Really_main@@YAHXZ.Clone"
+  %3 = load i32, i32* %"i.?Really_main@@YAHXZ.Clone", align 4
+  %"arrayidx.?Really_main@@YAHXZ.Clone" = getelementptr inbounds [50 x i8], [50 x i8]* %"msg.?Really_main@@YAHXZ.Clone", i32 0, i32 %3
+  %4 = load i8, i8* %"arrayidx.?Really_main@@YAHXZ.Clone", align 1
+  %"conv.?Really_main@@YAHXZ.Clone" = sext i8 %4 to i32
+  %"call.?Really_main@@YAHXZ.Clone" = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @"??_C@_02HAOIJKIC@?$CFc?$AA@", i32 0, i32 0), i32 %"conv.?Really_main@@YAHXZ.Clone") #5
+  br label %"for.inc.?Really_main@@YAHXZ.Clone"
+
+"for.inc.?Really_main@@YAHXZ.Clone":              ; preds = %"for.body.?Really_main@@YAHXZ.Clone"
+  %5 = load i32, i32* %"i.?Really_main@@YAHXZ.Clone", align 4
+  %"inc.?Really_main@@YAHXZ.Clone" = add nsw i32 %5, 1
+  store i32 %"inc.?Really_main@@YAHXZ.Clone", i32* %"i.?Really_main@@YAHXZ.Clone", align 4
+  br label %"for.cond.?Really_main@@YAHXZ.Clone"
+
+"for.end.?Really_main@@YAHXZ.Clone":              ; preds = %"for.cond.?Really_main@@YAHXZ.Clone"
+  %"arraydecay.?Really_main@@YAHXZ.Clone" = getelementptr inbounds [50 x i8], [50 x i8]* %"temp.?Really_main@@YAHXZ.Clone", i32 0, i32 0
+  %"arraydecay1.?Really_main@@YAHXZ.Clone" = getelementptr inbounds [50 x i8], [50 x i8]* %"msg.?Really_main@@YAHXZ.Clone", i32 0, i32 0
+  %"call2.?Really_main@@YAHXZ.Clone" = call i32 @strlen(i8* %"arraydecay1.?Really_main@@YAHXZ.Clone") #5
+  %"arraydecay3.?Really_main@@YAHXZ.Clone" = getelementptr inbounds [50 x i8], [50 x i8]* %"msg.?Really_main@@YAHXZ.Clone", i32 0, i32 0
+  br label %"entry.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone"
+
+"entry.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone": ; preds = %"for.end.?Really_main@@YAHXZ.Clone"
+  %"dst.addr.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone" = alloca i8*, align 4
+  %"len.addr.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone" = alloca i32, align 4
+  %"in.addr.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone" = alloca i8*, align 4
+  %"md.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone" = alloca %struct.sha1_state, align 4
+  store i8* %"arraydecay.?Really_main@@YAHXZ.Clone", i8** %"dst.addr.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  store i32 %"call2.?Really_main@@YAHXZ.Clone", i32* %"len.addr.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  store i8* %"arraydecay3.?Really_main@@YAHXZ.Clone", i8** %"in.addr.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  br label %"entry.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone"
+
+"entry.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone": ; preds = %"entry.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone"
+  %"md.addr.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone" = alloca %struct.sha1_state*, align 4
+  store %struct.sha1_state* %"md.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", %struct.sha1_state** %"md.addr.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  %6 = load %struct.sha1_state*, %struct.sha1_state** %"md.addr.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  %"s.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone" = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %6, i32 0, i32 3
+  %"arrayidx.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone" = getelementptr inbounds [5 x i32], [5 x i32]* %"s.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", i32 0, i32 0
+  store i32 1732584193, i32* %"arrayidx.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  %7 = load %struct.sha1_state*, %struct.sha1_state** %"md.addr.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  %"s1.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone" = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %7, i32 0, i32 3
+  %"arrayidx2.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone" = getelementptr inbounds [5 x i32], [5 x i32]* %"s1.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", i32 0, i32 1
+  store i32 -271733879, i32* %"arrayidx2.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  %8 = load %struct.sha1_state*, %struct.sha1_state** %"md.addr.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  %"s3.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone" = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %8, i32 0, i32 3
+  %"arrayidx4.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone" = getelementptr inbounds [5 x i32], [5 x i32]* %"s3.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", i32 0, i32 2
+  store i32 -1732584194, i32* %"arrayidx4.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  %9 = load %struct.sha1_state*, %struct.sha1_state** %"md.addr.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  %"s5.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone" = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %9, i32 0, i32 3
+  %"arrayidx6.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone" = getelementptr inbounds [5 x i32], [5 x i32]* %"s5.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", i32 0, i32 3
+  store i32 271733878, i32* %"arrayidx6.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  %10 = load %struct.sha1_state*, %struct.sha1_state** %"md.addr.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  %"s7.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone" = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %10, i32 0, i32 3
+  %"arrayidx8.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone" = getelementptr inbounds [5 x i32], [5 x i32]* %"s7.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", i32 0, i32 4
+  store i32 -1009589776, i32* %"arrayidx8.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  %11 = load %struct.sha1_state*, %struct.sha1_state** %"md.addr.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  %"msglen.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone" = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %11, i32 0, i32 2
+  store i32 0, i32* %"msglen.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  %12 = load %struct.sha1_state*, %struct.sha1_state** %"md.addr.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  %"buflen.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone" = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %12, i32 0, i32 1
+  store i32 0, i32* %"buflen.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  br label %"entry.Split.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone"
+
+"entry.Split.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone": ; preds = %"entry.?sha1_init@@YAXPAUsha1_state@@@Z.Clone.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone"
+  %13 = load i32, i32* %"len.addr.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  %14 = load i8*, i8** %"in.addr.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  call void @"?sha1_copy@@YAXPAUsha1_state@@PBEK@Z"(%struct.sha1_state* %"md.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", i8* %14, i32 %13)
+  %15 = load i8*, i8** %"dst.addr.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", align 4
+  call void @"?sha1_finish@@YAXPAUsha1_state@@PAE@Z"(%struct.sha1_state* %"md.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone", i8* %15)
+  br label %"for.end.Split.?Really_main@@YAHXZ.Clone"
+
+"for.end.Split.?Really_main@@YAHXZ.Clone":        ; preds = %"entry.Split.?sha1_memory@@YAXPBEKPAE@Z.Clone.?Really_main@@YAHXZ.Clone"
+  %"call4.?Really_main@@YAHXZ.Clone" = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @"??_C@_01EEMJAFIK@?6?$AA@", i32 0, i32 0)) #5
+  store i32 0, i32* %"i.?Really_main@@YAHXZ.Clone", align 4
+  br label %"for.cond5.?Really_main@@YAHXZ.Clone"
+
+"for.cond5.?Really_main@@YAHXZ.Clone":            ; preds = %"for.inc11.?Really_main@@YAHXZ.Clone", %"for.end.Split.?Really_main@@YAHXZ.Clone"
+  %16 = load i32, i32* %"i.?Really_main@@YAHXZ.Clone", align 4
+  %"cmp6.?Really_main@@YAHXZ.Clone" = icmp slt i32 %16, 50
+  br i1 %"cmp6.?Really_main@@YAHXZ.Clone", label %"for.body7.?Really_main@@YAHXZ.Clone", label %"for.end13.?Really_main@@YAHXZ.Clone"
+
+"for.body7.?Really_main@@YAHXZ.Clone":            ; preds = %"for.cond5.?Really_main@@YAHXZ.Clone"
+  %17 = load i32, i32* %"i.?Really_main@@YAHXZ.Clone", align 4
+  %"arrayidx8.?Really_main@@YAHXZ.Clone" = getelementptr inbounds [50 x i8], [50 x i8]* %"temp.?Really_main@@YAHXZ.Clone", i32 0, i32 %17
+  %18 = load i8, i8* %"arrayidx8.?Really_main@@YAHXZ.Clone", align 1
+  %"conv9.?Really_main@@YAHXZ.Clone" = zext i8 %18 to i32
+  %"call10.?Really_main@@YAHXZ.Clone" = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @"??_C@_02NJNOFBBI@?$CFx?$AA@", i32 0, i32 0), i32 %"conv9.?Really_main@@YAHXZ.Clone") #5
+  br label %"for.inc11.?Really_main@@YAHXZ.Clone"
+
+"for.inc11.?Really_main@@YAHXZ.Clone":            ; preds = %"for.body7.?Really_main@@YAHXZ.Clone"
+  %19 = load i32, i32* %"i.?Really_main@@YAHXZ.Clone", align 4
+  %"inc12.?Really_main@@YAHXZ.Clone" = add nsw i32 %19, 1
+  store i32 %"inc12.?Really_main@@YAHXZ.Clone", i32* %"i.?Really_main@@YAHXZ.Clone", align 4
+  br label %"for.cond5.?Really_main@@YAHXZ.Clone"
+
+"for.end13.?Really_main@@YAHXZ.Clone":            ; preds = %"for.cond5.?Really_main@@YAHXZ.Clone"
+  %"call14.?Really_main@@YAHXZ.Clone" = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @"??_C@_01EEMJAFIK@?6?$AA@", i32 0, i32 0)) #5
+  store i32 0, i32* %RetValuePtr
+  br label %for.body.Split
+
+for.body.Split:                                   ; preds = %"for.end13.?Really_main@@YAHXZ.Clone"
+  %RetValue = load i32, i32* %RetValuePtr
+  br label %for.inc
+
+for.inc:                                          ; preds = %for.body.Split
+  %20 = load i32, i32* %i, align 4
+  %inc = add nsw i32 %20, 1
+  store i32 %inc, i32* %i, align 4
+  br label %for.cond
+
+for.end:                                          ; preds = %for.cond
+  %call2 = call i32 @clock() #5
+  %21 = load i32, i32* %time, align 4
+  %sub = sub nsw i32 %call2, %21
+  store i32 %sub, i32* %time, align 4
+  %22 = load i32, i32* %time, align 4
+  %conv = sitofp i32 %22 to float
+  %div = fdiv float %conv, 1.000000e+03
+  %conv3 = fpext float %div to double
+  %23 = load i32, i32* %sum, align 4
+  %call4 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([23 x i8], [23 x i8]* @"??_C@_0BH@LENNACFI@result?$DN?$CFld?0time?$DN?$CFlf?5s?6?$AA@", i32 0, i32 0), i32 %23, double %conv3) #5
+  ret i32 0
+}
+
+; Function Attrs: nounwind
+declare dllimport i32 @clock() #3
+
+define void @for.cond.OutLineFunc(i32* %OutFuncArg, i32* %OutFuncArg1, i8** %OutFuncArg2, %struct.sha1_state** %OutFuncArg3) {
+entry:
+  %OutFuncArg.addr = alloca i32*, align 4
+  store i32* %OutFuncArg, i32** %OutFuncArg.addr, align 4
+  %y.Clone = load i32*, i32** %OutFuncArg.addr, align 4
+  %OutFuncArg1.addr = alloca i32*, align 4
+  store i32* %OutFuncArg1, i32** %OutFuncArg1.addr, align 4
+  %x.Clone = load i32*, i32** %OutFuncArg1.addr, align 4
+  %OutFuncArg2.addr = alloca i8**, align 4
+  store i8** %OutFuncArg2, i8*** %OutFuncArg2.addr, align 4
+  %buf.addr.Clone = load i8**, i8*** %OutFuncArg2.addr, align 4
+  %OutFuncArg3.addr = alloca %struct.sha1_state**, align 4
+  store %struct.sha1_state** %OutFuncArg3, %struct.sha1_state*** %OutFuncArg3.addr, align 4
+  %md.addr.Clone = load %struct.sha1_state**, %struct.sha1_state*** %OutFuncArg3.addr, align 4
+  br label %for.cond.Clone
+
+for.cond.Clone:                                   ; preds = %entry, %for.inc.Clone
+  %0 = load i32, i32* %y.Clone, align 4
+  %1 = load i32, i32* %x.Clone, align 4
+  %cmp4.Clone = icmp ult i32 %0, %1
+  br i1 %cmp4.Clone, label %for.body.Clone, label %for.end.Clone
+
+for.body.Clone:                                   ; preds = %for.cond.Clone
+  %2 = load i8*, i8** %buf.addr.Clone, align 4
+  %incdec.ptr.Clone = getelementptr inbounds i8, i8* %2, i32 1
+  store i8* %incdec.ptr.Clone, i8** %buf.addr.Clone, align 4
+  %3 = load i8, i8* %2, align 1
+  %4 = load %struct.sha1_state*, %struct.sha1_state** %md.addr.Clone, align 4
+  %buf5.Clone = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %4, i32 0, i32 0
+  %5 = load %struct.sha1_state*, %struct.sha1_state** %md.addr.Clone, align 4
+  %buflen6.Clone = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %5, i32 0, i32 1
+  %6 = load i32, i32* %buflen6.Clone, align 4
+  %inc.Clone = add i32 %6, 1
+  store i32 %inc.Clone, i32* %buflen6.Clone, align 4
+  %arrayidx.Clone = getelementptr inbounds [64 x i8], [64 x i8]* %buf5.Clone, i32 0, i32 %6
+  store i8 %3, i8* %arrayidx.Clone, align 1
+  br label %for.inc.Clone
+
+for.inc.Clone:                                    ; preds = %for.body.Clone
+  %7 = load i32, i32* %y.Clone, align 4
+  %inc7.Clone = add i32 %7, 1
+  store i32 %inc7.Clone, i32* %y.Clone, align 4
+  br label %for.cond.Clone
+
+for.end.Clone:                                    ; preds = %for.cond.Clone
+  br label %OutFuncRetBB
+
+OutFuncRetBB:                                     ; preds = %for.end.Clone
+  %8 = getelementptr inbounds %Struct.RetValue, %Struct.RetValue* @Struct.RetValue, i32 0, i32 0
+  store i32* %y.Clone, i32** %8, align 4
+  %9 = getelementptr inbounds %Struct.RetValue, %Struct.RetValue* @Struct.RetValue, i32 0, i32 1
+  store i8** %buf.addr.Clone, i8*** %9, align 4
+  ret void
+}
+
+define void @for.cond.OutLineFunc.2(i32* %OutFuncArg, %struct.sha1_state** %OutFuncArg1, [80 x i32]* %OutFuncArg2) {
+entry:
+  %OutFuncArg.addr = alloca i32*, align 4
+  store i32* %OutFuncArg, i32** %OutFuncArg.addr, align 4
+  %x.Clone = load i32*, i32** %OutFuncArg.addr, align 4
+  %OutFuncArg1.addr = alloca %struct.sha1_state**, align 4
+  store %struct.sha1_state** %OutFuncArg1, %struct.sha1_state*** %OutFuncArg1.addr, align 4
+  %md.addr.Clone = load %struct.sha1_state**, %struct.sha1_state*** %OutFuncArg1.addr, align 4
+  %OutFuncArg2.addr = alloca [80 x i32]*, align 4
+  store [80 x i32]* %OutFuncArg2, [80 x i32]** %OutFuncArg2.addr, align 4
+  %w.Clone = load [80 x i32]*, [80 x i32]** %OutFuncArg2.addr, align 4
+  br label %for.cond.Clone
+
+for.cond.Clone:                                   ; preds = %entry, %for.inc.Clone
+  %0 = load i32, i32* %x.Clone, align 4
+  %cmp.Clone = icmp ult i32 %0, 16
+  br i1 %cmp.Clone, label %for.body.Clone, label %for.end.Clone
+
+for.body.Clone:                                   ; preds = %for.cond.Clone
+  %1 = load %struct.sha1_state*, %struct.sha1_state** %md.addr.Clone, align 4
+  %buf.Clone = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %1, i32 0, i32 0
+  %arraydecay.Clone = getelementptr inbounds [64 x i8], [64 x i8]* %buf.Clone, i32 0, i32 0
+  %2 = load i32, i32* %x.Clone, align 4
+  %mul.Clone = mul i32 4, %2
+  %add.ptr.Clone = getelementptr inbounds i8, i8* %arraydecay.Clone, i32 %mul.Clone
+  %arrayidx.Clone = getelementptr inbounds i8, i8* %add.ptr.Clone, i32 0
+  %3 = load i8, i8* %arrayidx.Clone, align 1
+  %conv.Clone = zext i8 %3 to i32
+  %and.Clone = and i32 %conv.Clone, 255
+  %shl.Clone = shl i32 %and.Clone, 24
+  %4 = load %struct.sha1_state*, %struct.sha1_state** %md.addr.Clone, align 4
+  %buf1.Clone = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %4, i32 0, i32 0
+  %arraydecay2.Clone = getelementptr inbounds [64 x i8], [64 x i8]* %buf1.Clone, i32 0, i32 0
+  %5 = load i32, i32* %x.Clone, align 4
+  %mul3.Clone = mul i32 4, %5
+  %add.ptr4.Clone = getelementptr inbounds i8, i8* %arraydecay2.Clone, i32 %mul3.Clone
+  %arrayidx5.Clone = getelementptr inbounds i8, i8* %add.ptr4.Clone, i32 1
+  %6 = load i8, i8* %arrayidx5.Clone, align 1
+  %conv6.Clone = zext i8 %6 to i32
+  %and7.Clone = and i32 %conv6.Clone, 255
+  %shl8.Clone = shl i32 %and7.Clone, 16
+  %or.Clone = or i32 %shl.Clone, %shl8.Clone
+  %7 = load %struct.sha1_state*, %struct.sha1_state** %md.addr.Clone, align 4
+  %buf9.Clone = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %7, i32 0, i32 0
+  %arraydecay10.Clone = getelementptr inbounds [64 x i8], [64 x i8]* %buf9.Clone, i32 0, i32 0
+  %8 = load i32, i32* %x.Clone, align 4
+  %mul11.Clone = mul i32 4, %8
+  %add.ptr12.Clone = getelementptr inbounds i8, i8* %arraydecay10.Clone, i32 %mul11.Clone
+  %arrayidx13.Clone = getelementptr inbounds i8, i8* %add.ptr12.Clone, i32 2
+  %9 = load i8, i8* %arrayidx13.Clone, align 1
+  %conv14.Clone = zext i8 %9 to i32
+  %and15.Clone = and i32 %conv14.Clone, 255
+  %shl16.Clone = shl i32 %and15.Clone, 8
+  %or17.Clone = or i32 %or.Clone, %shl16.Clone
+  %10 = load %struct.sha1_state*, %struct.sha1_state** %md.addr.Clone, align 4
+  %buf18.Clone = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %10, i32 0, i32 0
+  %arraydecay19.Clone = getelementptr inbounds [64 x i8], [64 x i8]* %buf18.Clone, i32 0, i32 0
+  %11 = load i32, i32* %x.Clone, align 4
+  %mul20.Clone = mul i32 4, %11
+  %add.ptr21.Clone = getelementptr inbounds i8, i8* %arraydecay19.Clone, i32 %mul20.Clone
+  %arrayidx22.Clone = getelementptr inbounds i8, i8* %add.ptr21.Clone, i32 3
+  %12 = load i8, i8* %arrayidx22.Clone, align 1
+  %conv23.Clone = zext i8 %12 to i32
+  %and24.Clone = and i32 %conv23.Clone, 255
+  %or25.Clone = or i32 %or17.Clone, %and24.Clone
+  %13 = load i32, i32* %x.Clone, align 4
+  %arrayidx26.Clone = getelementptr inbounds [80 x i32], [80 x i32]* %w.Clone, i32 0, i32 %13
+  store i32 %or25.Clone, i32* %arrayidx26.Clone, align 4
+  br label %for.inc.Clone
+
+for.inc.Clone:                                    ; preds = %for.body.Clone
+  %14 = load i32, i32* %x.Clone, align 4
+  %inc.Clone = add i32 %14, 1
+  store i32 %inc.Clone, i32* %x.Clone, align 4
+  br label %for.cond.Clone
+
+for.end.Clone:                                    ; preds = %for.cond.Clone
+  store i32 16, i32* %x.Clone, align 4
+  br label %OutFuncRetBB
+
+OutFuncRetBB:                                     ; preds = %for.end.Clone
+  %15 = getelementptr inbounds %Struct.RetValue.0, %Struct.RetValue.0* @Struct.RetValue.1, i32 0, i32 0
+  store i32* %x.Clone, i32** %15, align 4
+  ret void
+}
+
+define void @while.cond.OutLineFunc(%struct.sha1_state** %OutFuncArg) {
+entry:
+  %OutFuncArg.addr = alloca %struct.sha1_state**, align 4
+  store %struct.sha1_state** %OutFuncArg, %struct.sha1_state*** %OutFuncArg.addr, align 4
+  %md.addr.Clone = load %struct.sha1_state**, %struct.sha1_state*** %OutFuncArg.addr, align 4
+  br label %while.cond.Clone
+
+while.cond.Clone:                                 ; preds = %entry, %while.body.Clone
+  %0 = load %struct.sha1_state*, %struct.sha1_state** %md.addr.Clone, align 4
+  %buflen5.Clone = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %0, i32 0, i32 1
+  %1 = load i32, i32* %buflen5.Clone, align 4
+  %cmp6.Clone = icmp ult i32 %1, 64
+  br i1 %cmp6.Clone, label %while.body.Clone, label %while.end.Clone
+
+while.body.Clone:                                 ; preds = %while.cond.Clone
+  %2 = load %struct.sha1_state*, %struct.sha1_state** %md.addr.Clone, align 4
+  %buf7.Clone = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %2, i32 0, i32 0
+  %3 = load %struct.sha1_state*, %struct.sha1_state** %md.addr.Clone, align 4
+  %buflen8.Clone = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %3, i32 0, i32 1
+  %4 = load i32, i32* %buflen8.Clone, align 4
+  %inc9.Clone = add i32 %4, 1
+  store i32 %inc9.Clone, i32* %buflen8.Clone, align 4
+  %arrayidx10.Clone = getelementptr inbounds [64 x i8], [64 x i8]* %buf7.Clone, i32 0, i32 %4
+  store i8 0, i8* %arrayidx10.Clone, align 1
+  br label %while.cond.Clone
+
+while.end.Clone:                                  ; preds = %while.cond.Clone
+  %5 = load %struct.sha1_state*, %struct.sha1_state** %md.addr.Clone, align 4
+  call void @"?sha1_compress@@YAXPAUsha1_state@@@Z"(%struct.sha1_state* %5)
+  %6 = load %struct.sha1_state*, %struct.sha1_state** %md.addr.Clone, align 4
+  %buflen11.Clone = getelementptr inbounds %struct.sha1_state, %struct.sha1_state* %6, i32 0, i32 1
+  store i32 0, i32* %buflen11.Clone, align 4
+  br label %OutFuncRetBB
+
+OutFuncRetBB:                                     ; preds = %while.end.Clone
+  ret void
+}
+
+attributes #0 = { noinline optnone sspstrong "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="pentium4" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #1 = { noinline nounwind optnone sspstrong "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="pentium4" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #2 = { argmemonly nounwind }
+attributes #3 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="pentium4" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #4 = { noinline norecurse optnone sspstrong "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="pentium4" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #5 = { nounwind }
+
+!llvm.linker.options = !{!0, !1}
+!llvm.ident = !{!2}
+!llvm.module.flags = !{!3, !4}
+
+!0 = !{!"/DEFAULTLIB:msvcrtd.lib"}
+!1 = !{!"/DEFAULTLIB:oldnames.lib"}
+!2 = !{!"Obfuscator-LLVM clang version 8.0.1 (tags/RELEASE_801/final) (based on Obfuscator-LLVM 8.0.1)"}
+!3 = !{i32 1, !"NumRegisterParameters", i32 0}
+!4 = !{i32 1, !"wchar_size", i32 2}
