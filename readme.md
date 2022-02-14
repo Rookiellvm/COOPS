@@ -19,22 +19,22 @@ Usage: `OCalling.exe ..\example\aes\aes.bc ..\example\aes\aes-obf.bc`
 
 1. aes		symmetric cryptographic algorithm	`Usage:aes.exe`
 2. rsa		asymmetric cryptographic algorithm	`Usage:rsa.exe`
-3. bzip		Lexical analyzer					`Usage:bzip.exe   ./input/input.random`
-4. gzip		Compression algorithm				`Usage:gzip.exe   ./input/input.combined`
-5. parser	Grammar Parser    				    `Usage:parser.exe ./input/input.combined`
+3. bzip		Lexical analyzer					`Usage:bzip.exe    ./input/input.random`
+4. gzip		Compression algorithm				`Usage:gzip.exe    ./input/input.combined`
+5. parser	Grammar Parser    				    `Usage:parser.exe  ./input/input.combined`
 6. twoif	Simulated annealing algorithm		`Usage:twoif.exe   ./input/test`
 
 
 *Table1 Program execution Cost before and after obfuscation*
 
-| example | time | size | 
-| ------- | -----| -----|
-| aes     | 1.05 | 1.04 |  
-| rsa     | 1.04 | 1.11 |   
-| bzip    | 1.02 | 1.05 |  
-| gzip    | 1.12 | 1.39 |  
-| parser  | 1.22 | 1.72 |   
-| twoif   | 1.25 | 1.82 |   
+ | example | time | size | 
+ | ------- | -----| -----|
+ | aes     | 1.05 | 1.04 |  
+ | rsa     | 1.04 | 1.11 |   
+ | bzip    | 1.02 | 1.05 |  
+ | gzip    | 1.12 | 1.39 |  
+ | parser  | 1.22 | 1.72 |   
+ | twoif   | 1.25 | 1.82 |   
 
 
 ## 0x04 Screenshot
@@ -47,7 +47,7 @@ Usage: `OCalling.exe ..\example\aes\aes.bc ..\example\aes\aes-obf.bc`
 
 ![rsa](img/Bindiff/rsa.png)
 
-*Figure3 Program similarity before and after obfuscation-rsa*
+*Figure3 Program similarity before and after obfuscation-bzip*
 
 ![bzip](img/Bindiff/bzip.png)
 
