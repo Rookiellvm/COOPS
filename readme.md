@@ -41,27 +41,27 @@ Usage: `OCalling.exe ..\example\aes\aes.bc ..\example\aes\aes-obf.bc`
 
 *Figure1 Program similarity before and after obfuscation-aes*
 
-![aes](img/Bindiff/aes.png)
+![aes](img/Bindiff/AES.png)
 
 *Figure2 Program similarity before and after obfuscation-rsa*
 
-![rsa](img/Bindiff/rsa.png)
+![rsa](img/Bindiff/RSA.png)
 
 *Figure3 Program similarity before and after obfuscation-bzip*
 
-![bzip](img/Bindiff/bzip.png)
+![bzip](img/Bindiff/Bzip.png)
 
 *Figure4 Program similarity before and after obfuscation-gzip*
 
-![gzip](img/Bindiff/gzip.png)
+![gzip](img/Bindiff/Gzip.png)
 
 *Figure5 Program similarity before and after obfuscation-parser*
 
-![parser](img/Bindiff/parser.png)
+![parser](img/Bindiff/Parser.png)
 
 *Figure5 Program similarity before and after obfuscation-twoif*
 
-![twoif](img/Bindiff/twoif.png)
+![twoif](img/Bindiff/Twoif.png)
 
 
 ## 0x05 Paper
