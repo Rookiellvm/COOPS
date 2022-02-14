@@ -5,7 +5,7 @@ COOPS is an obfuscation tool based on LLVM, which can perfectly realize the obfu
 ## 0x01 Principle
 
 We propose COOPS for protecting software based on program semantic information, in which functions are regarded as basic semantic units, and the switch relationship between the intra-function control flow and the inter-function calling is established. The inter-function calling can be hidden in the intra-function control flow, and in reverse the intra-function control flow can also be converted to inter-function calling. 
-
+![Example](img/Example.png)
 ## 0x02 How to use
 
 1. Compile the source code and ".\source\*.cpp" into LLVM intermedia representation
