@@ -59,7 +59,7 @@ Usage: `COOPS.exe ..\example\aes\aes.bc ..\example\aes\aes-obf.bc`
 
 ![parser](img/Bindiff/Parser.png)
 
-*Figure5 Program similarity before and after obfuscation-twoif*
+*Figure6 Program similarity before and after obfuscation-twoif*
 
 ![twoif](img/Bindiff/Twoif.png)
 
