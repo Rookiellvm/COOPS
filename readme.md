@@ -1,4 +1,4 @@
-# Othread Obfuscator
+# COOPS Obfuscator
 
 COOPS is an obfuscation tool based on LLVM, which can perfectly realize the obfuscation of C/C++ code under the Windows platform of x86 architecture.
 
